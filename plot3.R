@@ -1,0 +1,16 @@
+data<-read.csv("C:\\Users\\MyPc\\Desktop\\pooja\\data\\household_power_consumption.txt",header=TRUE,sep=";",na.strings = "?")
+data<-na.omit(data)
+data$Date <- as.Date(data$Date, "%d/%m/%Y")
+d1<-as.Date("2007-02-01")
+d2<-as.Date("2007-02-02 ")
+data1<-subset(data,data$Date==d1|data$Date==d2)
+names<-gsub("_"," ",colnames(data1))
+colnames(data1)<-names
+
+plot(data1$`Sub metering 1`,type="l",ylab="Energy sub metering",xaxt="n")
+lines(data1$`Sub metering 2`,type="l",col="red")
+lines(data1$`Sub metering 3`,type="l",col="blue")
+axis(1, at=c(0,1500,2900),labels =c("Thu","Fri","Sat"))
+legend("topright",lty=rep(2,3),col=c("black","red","blue"),legend=c("sub merging 1","sun merging 2","sub merging 3"),bty="n")
+dev.copy(png, file="plot3.png")
+dev.off()
